@@ -1,13 +1,9 @@
-type Song {
+type Book {
   title: String
-  author: Author
-}
-
-type Author {
-  name: String
-  songs: [Song]
+  author: String
 }
 
 type Query {
-  greeting: String
+  books: [Book]
+  book(id: ID!): Book
 }
