@@ -1,3 +1,3 @@
 # GraphQL
 
-Just give a shot to GraphQL
+Just gave a shot to GraphQL
