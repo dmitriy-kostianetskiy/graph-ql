@@ -1,18 +1,26 @@
 import { ApolloServer } from 'apollo-server';
-import { BOOKS } from './data';
+import { BooksDataSource } from './data-source';
+import { Context } from './graphql';
+import { typeDefs } from './typedefs';
 
 const resolvers = {
   Query: {
-    books: () => {
-      return BOOKS;
+    books: (_parent, _args, { dataSources: { books } }: Context) => {
+      return books.getBooks();
     },
-    book: (_parent, args, _context, _info) => {
-      return BOOKS.find((x) => x.id === args.id);
+    book: (_parent, { id }, { dataSources: { books } }: Context, _info) => {
+      return books.getBookById(id);
     },
   },
 };
 
-const server = new ApolloServer({ typeDefs: 'schema.graphql', resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  dataSources: () => ({
+    books: new BooksDataSource(),
+  }),
+});
 
 server
   .listen({ port: 9000 })
