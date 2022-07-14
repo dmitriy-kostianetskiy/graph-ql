@@ -1,4 +1,5 @@
 type Book {
+  id: ID!
   title: String
   author: String
 }
@@ -14,5 +15,5 @@ input CreateBookInput {
 }
 
 type Mutation {
-  createBook(id: ID!, book: CreateBookInput): Book
+  createBook(book: CreateBookInput): Book
 }
