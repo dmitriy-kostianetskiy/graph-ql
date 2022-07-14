@@ -1,6 +1,6 @@
 const GRAPHQL_URL = 'http://localhost:9000/';
 
-async function fetchGreeting() {
+async function fetchBooks() {
   const response = await fetch(GRAPHQL_URL, {
     method: 'POST',
     headers: {
@@ -9,7 +9,10 @@ async function fetchGreeting() {
     body: JSON.stringify({
       query: `
         query {
-          greeting
+          books {
+            title,
+            author
+          }
         }
       `,
     }),
@@ -19,7 +22,14 @@ async function fetchGreeting() {
   return data;
 }
 
-fetchGreeting().then(({ greeting }) => {
-    const title = document.querySelector('h1');
-    title.textContent = greeting;
+fetchBooks().then(({ books }) => {
+    const list = document.querySelector('#books-list');
+
+    books.forEach(book => {
+      const item = document.createElement('li');
+
+      item.innerText = book.title + ' - ' + book.author;
+
+      list.insertBefore(item, null);
+    });
 });
