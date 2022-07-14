@@ -5,5 +5,14 @@ type Book {
 
 type Query {
   books: [Book]
-  book(id: ID!): Book
+  bookById(id: ID!): Book
+}
+
+input CreateBookInput {
+  title: String!
+  author: String!
+}
+
+type Mutation {
+  createBook(id: ID!, book: CreateBookInput): Book
 }
